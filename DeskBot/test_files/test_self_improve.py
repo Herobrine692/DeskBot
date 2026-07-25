@@ -1,18 +1,28 @@
-from brain.self_improve import SelfImprover
+import sys
+from pathlib import Path
+
+sys.path.append(
+    str(Path(__file__).parent.parent)
+)
+
 from config import Config
 from brain.memory import Memory
+from brain.self_improve import SelfImprover
 
 
 config = Config()
+
 memory = Memory(config)
 
-ai = SelfImprover(
+improver = SelfImprover(
     config,
     memory
 )
 
-ai.suggest(
+improver.suggest(
     "Improve file handling"
 )
 
-print(ai.list_suggestions())
+print(
+    improver.list_suggestions()
+)

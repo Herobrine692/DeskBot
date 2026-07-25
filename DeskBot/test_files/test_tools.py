@@ -1,3 +1,10 @@
+import sys
+from pathlib import Path
+
+sys.path.append(
+    str(Path(__file__).parent.parent)
+)
+
 import asyncio
 
 from brain.tools import ToolManager
@@ -16,6 +23,7 @@ async def main():
         hello
     )
 
+    print("Available tools:")
     print(tools.available_tools())
 
     result = await tools.run(
@@ -26,4 +34,5 @@ async def main():
     print(result)
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
