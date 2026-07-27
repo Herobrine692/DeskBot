@@ -39,12 +39,15 @@ class DeskBot:
         print("\nDeskBot is online.\n")
 
     async def run(self):
-        """Main program loop."""
 
-        while True:
-            await self.planner.tick()
-            await asyncio.sleep(0.1)
+        from ui.chat import Chat
 
+        chat = Chat(
+            self.ai,
+            self.memory
+        )
+
+        await chat.start()
 
 async def main():
     bot = DeskBot()
