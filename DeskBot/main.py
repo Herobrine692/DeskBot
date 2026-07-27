@@ -13,6 +13,7 @@ from config import Config
 from brain.ai import AI
 from brain.memory import Memory
 from brain.planner import Planner
+from brain.tools import Tools
 
 
 class DeskBot:
@@ -28,13 +29,24 @@ class DeskBot:
         self.memory = Memory(self.config)
 
         print("[3/3] Initializing AI...")
-        self.ai = AI(self.config, self.memory)
+
+        self.tools = Tools()
+
+        self.ai = None
 
         self.planner = Planner(
             self.config,
             self.ai,
-            self.memory,
+            self.memory
         )
+
+        self.ai = AI(
+            self.memory,
+            self.planner,
+            self.tools
+        )
+
+        self.planner.ai = self.ai
 
         print("\nDeskBot is online.\n")
 

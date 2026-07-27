@@ -43,3 +43,15 @@ class Planner:
             self.last_tick = now
 
         await asyncio.sleep(0)
+
+
+    def create_plan(self, task):
+        """
+        Create a simple task plan.
+        """
+
+        return [
+            f"Understand: {task}",
+            "Process information",
+            "Provide response"
+        ]

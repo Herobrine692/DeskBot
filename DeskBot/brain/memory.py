@@ -19,14 +19,14 @@ class Memory:
             / "memory.db"
         )
 
-        self.connection = sqlite3.connect(
+        self.conn = sqlite3.connect(
             self.database
         )
 
         self.create_tables()
 
     def create_tables(self):
-        cursor = self.connection.cursor()
+        cursor = self.conn.cursor()
 
         cursor.execute(
             """
@@ -38,7 +38,7 @@ class Memory:
             """
         )
 
-        self.connection.commit()
+        self.conn.commit()
 
 
     def remember(self, content: str):
@@ -46,7 +46,7 @@ class Memory:
         Store a memory.
         """
 
-        cursor = self.connection.cursor()
+        cursor = self.conn.cursor()
 
         cursor.execute(
             """
@@ -60,7 +60,7 @@ class Memory:
             )
         )
 
-        self.connection.commit()
+        self.conn.commit()
 
 
     def recall(self, limit=10):
@@ -68,7 +68,7 @@ class Memory:
         Retrieve recent memories.
         """
 
-        cursor = self.connection.cursor()
+        cursor = self.conn.cursor()
 
         cursor.execute(
             """
@@ -83,4 +83,28 @@ class Memory:
         return [
             row[0]
             for row in cursor.fetchall()
+        ]
+
+
+    def search(self, query):
+        """
+        Search stored memories for related information.
+        """
+
+        cursor = self.conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT content 
+            FROM memories
+            WHERE content LIKE ?
+            """,
+            (f"%{query}%",)
+        )
+
+        results = cursor.fetchall()
+
+        return [
+            row[0]
+            for row in results
         ]

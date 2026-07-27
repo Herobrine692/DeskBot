@@ -5,7 +5,7 @@ Manages tools that DeskBot can use.
 """
 
 
-class ToolManager:
+class Tools:
 
     def __init__(self):
         self.tools = {}
